@@ -9,6 +9,8 @@ cap = cv2.VideoCapture(0)
 # To use a video file as input
 # cap = cv2.VideoCapture('filename.mp4')
 i = 0
+reoccurance = 0
+reoccurThreshhold = 5
 while True:
     # Read the frame
     _, img = cap.read()
@@ -17,9 +19,14 @@ while True:
     # Detect the faces
     faces = face_cascade.detectMultiScale(gray, 1.1, 4)
     # Draw the rectangle around each face
-    for (x, y, w, h) in faces:
-        print(f'Saw a face {i}')
+    if not faces:
+        reoccurance = 0
+    else:
+        reoccurance += 1
         i += 1
+        if reoccurance > reoccurThreshhold:
+            print(f'Saw a face {i}')
+    for (x, y, w, h) in faces:
         cv2.rectangle(img, (x, y), (x+w, y+h), (255, 0, 0), 2)
     # Display
     # cv2.imshow('img', img)
