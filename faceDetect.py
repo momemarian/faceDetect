@@ -1,5 +1,6 @@
 #!/usr/bin/env python3
 import cv2
+import numpy
 
 # Load the cascade
 face_cascade = cv2.CascadeClassifier('haarcascade_frontalface_default.xml')
@@ -19,7 +20,7 @@ while True:
     # Detect the faces
     faces = face_cascade.detectMultiScale(gray, 1.1, 4)
     # Draw the rectangle around each face
-    if not faces:
+    if type(faces) != numpy.ndarray:
         reoccurance = 0
     else:
         reoccurance += 1
